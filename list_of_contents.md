@@ -1,11 +1,6 @@
----
-title: "Inhaltsverzeichnis"
-output: html_document
----
+# Inhaltsverzeichnis
 
-***
-
-- 1 Theoretische Einführung (30min)
+- 1 Theoretische Einführung (2h)
 
     - 1.1 Warum R? Motivation (DS) (5min)
         - Archäologische Daten
@@ -40,7 +35,7 @@ output: html_document
 
 ***
 
-- 2 Datenverstehen und beschreiben mit R (1h)
+- 2 Datenverstehen und beschreiben mit R (2h)
 
     - 2.1 Datenhaltung (DS) (5min)
 
@@ -65,7 +60,7 @@ output: html_document
 
 ***
 
-- 3 Daten visualisieren (1h)
+- 3 Daten visualisieren (2h)
 
     - 3.1 ggplot2 - Theorie (CS) (10min)
         - Geschichte und Hintergrund
@@ -83,3 +78,8 @@ output: html_document
         - 3.2.5 Anwendung 5: Kartierung (CS) (Bonus)
 
 ***
+
+- 4 Geodaten-Verarbeitung (2h)
+
+    - 4.1 Typen von Geodaten und Einlesen in R
+    - 4.2 Punktfeldstatistik
