@@ -17,7 +17,6 @@ Das Tutorial gliedert sich in vier Blöcke:
 
 Die Veranstaltung wird mit den Notebooks der Teilnehmenden durchgeführt. Die Erfahrung zeigt, dass ein maximaler Lernerfolg erzielt wird, wenn die Teilnehmer nicht auf einem fremde System - bspw. in einem Computer-Pool - sondern mit ihren eigenen Geräten das Tutorial bewältigen. Für das Tutorial muss die [Basisversion von R](https://www.r-project.org/) installiert sein (Links siehe weiter unten). Als Entwicklungsumgebung werden wir [RStudio](https://www.rstudio.com/products/rstudio/) nutzen, welches ebenfalls installiert sein muss. Zusätzlich werden einigen Pakete benötigt. Diese können automatisch durch ein kleines R-Skript installiert werden, welches kurz vor dem Tutorial bereitgestellt wird. Im Zweifelsfall kann Unterstützung für Windows-, Mac- sowie Linux-Systeme erfolgen. Wir bitten aber jeden Teilnehmer eindringlich, die notwendige Software bereits vor dem Tutorial zu installieren. Sollten dabei Fragen oder Probleme aufkommen, sind Sie eingeladen, sich auch schon vor dem Workshop zu melden.  
 
-Nähere Informationen sowie alle Skripte, Daten und Anleitungen werden hier zu finden sein:  https://github.com/dirkseidensticker/R-Tutorial_TArchIT2017  
 Die Entwicklung dieses Tutorials ist ein dynamischer Prozess, der über Github geteilt und offen gelegt wird. Bitten beachten Sie, dass Daten und Ausarbeitungen in diesem "Work-in-progress"-Archiv folglich mitunter unvollständig und Skripte teilweise noch nicht funktional sein können. 
 
 ## Benötigte Software
@@ -26,7 +25,9 @@ Die Entwicklung dieses Tutorials ist ein dynamischer Prozess, der über Github g
 * [RStudio](https://www.rstudio.com/products/rstudio/download/)
 * Pakete: *wir werden kurz vor dem Tutorial ein R-Skript anbieten, welches die notwendigen Pakete automatisch installiert; Anleitung folgt*
 
-[Die Installation der benötigsten Software (unter Windows) ist hier beschrieben](https://github.com/dirkseidensticker/R-Tutorial_TArchIT2017/blob/master/Installationsanleitung_Windows.md)
+[Die Installation der benötigsten Software (unter Windows) ist hier beschrieben](https://github.com/eScienceCenter/R-Tutorial_20170707/blob/master/Installationsanleitung_Windows.pdf)
+
+[Die dezidierten Inhalte für die Veranstaltung findet sich hier](https://github.com/eScienceCenter/R-Tutorial_20170707/blob/master/Zeitplan.md)
 
 ## Daten
 Datengrundlage für den Kurs bildet ein modifizierter archäologischer Forschungsdatensatz, welcher sich auf den Trainingsdatensatz [AtlantGIS](https://github.com/kacebe/AtlantGIS) bezieht.
