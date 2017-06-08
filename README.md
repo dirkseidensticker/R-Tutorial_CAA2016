@@ -19,6 +19,9 @@ Die Veranstaltung wird mit den Notebooks der Teilnehmenden durchgeführt. Die Er
 
 Die Entwicklung dieses Tutorials ist ein dynamischer Prozess, der über Github geteilt und offen gelegt wird. Bitten beachten Sie, dass Daten und Ausarbeitungen in diesem "Work-in-progress"-Archiv folglich mitunter unvollständig und Skripte teilweise noch nicht funktional sein können. 
 
+[Die dezidierten Inhalte für die Veranstaltung findet sich hier](https://github.com/eScienceCenter/R-Tutorial_20170707/blob/master/Zeitplan.md)
+
+
 ## Benötigte Software
 * [R: The R Project for Statistical Computing](https://www.r-project.org/):
 	* Die neusten Installationsdateien: [The Comprehensive R Archive Network](http://ftp5.gwdg.de/pub/misc/cran/)
@@ -27,7 +30,6 @@ Die Entwicklung dieses Tutorials ist ein dynamischer Prozess, der über Github g
 
 [Die Installation der benötigsten Software (unter Windows) ist hier beschrieben](https://github.com/eScienceCenter/R-Tutorial_20170707/blob/master/Installationsanleitung_Windows.pdf)
 
-[Die dezidierten Inhalte für die Veranstaltung findet sich hier](https://github.com/eScienceCenter/R-Tutorial_20170707/blob/master/Zeitplan.md)
 
 ## Daten
 Datengrundlage für den Kurs bildet ein modifizierter archäologischer Forschungsdatensatz, welcher sich auf den Trainingsdatensatz [AtlantGIS](https://github.com/kacebe/AtlantGIS) bezieht.
