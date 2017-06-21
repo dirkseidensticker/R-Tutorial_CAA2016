@@ -1,7 +1,7 @@
 --- 
 title: "Statistik in R"
 author: "Dirk Seidensticker/Clemens Schmid"
-date: "6. Februar 2016"
+date: "7. Juli 2017"
 output:
   beamer_presentation:
     pandoc_args: --highlight-style=tango
@@ -23,7 +23,7 @@ atlant <- read.csv(
 ```
 
 ```{r} 
-head(atlant)
+head(atlant[,1:9])
 ```
 
 ## Standardfunktionen
@@ -117,24 +117,78 @@ plot(Lc(atlant$wt))
 
 # Schließende Statistik
 
-## Tests auf Lageparameter
+## Tests auf Lageparameter: *Einstichproben-t-Test*
 
 ```{r} 
 t.test(atlant$wt)
 ```
 
 
-##  Hypothesentests
+##  Hypothesentests: *Chi-Quadrat-Unabhängigkeitstest*
+
+> prüft, ob zwei Merkmale stochastisch unabhängig sind.
 
 ```{r, echo=FALSE} 
-a <- tapply(atlant$qty, list(atlant$site, atlant$size), length)
-a[is.na(a)] <- 0
+atlant$featureType <- atlant$feature
+atlant$featureType <- as.character(atlant$featureType)
+atlant$featureType[atlant$featureType != "surface"] <- "excavation"
+
+atlant$sherdType <- atlant$sherd
+atlant$sherdType <- as.character(atlant$sherdType)
+atlant$sherdType[atlant$sherdType == "G"] <- "vessel"
+atlant$sherdType[atlant$sherdType != "vessel"] <- "sherd"
+
+a <- tapply(atlant$qty, list(atlant$featureType, atlant$sherdType), length)
 ```
 
 ```{r} 
-head(a, n = 3)
+a
 ```
 
 ```{r} 
 chisq.test(a)
 ```
+
+
+##  Hypothesentests: *Chi-Quadrat-Verteilungs-/Anpassungstest*
+
+> prüft, ob vorliegende Daten auf eine bestimmte Weise verteilt sind
+
+```{r, echo=FALSE}
+c <- aggregate(x = atlant$wt, by = list(atlant$size), mean, na.rm=TRUE)
+colnames(c) <- c("size", "wt.obs")
+
+d <- data.frame(unique(na.omit(atlant$size)))
+colnames(d) <- c("size")
+d$wt.exp <- mean(atlant$wt)
+
+e <- merge(c, d)
+e
+```
+
+Mittleres Scherbengewicht
+
+
+##  Hypothesentests: *Chi-Quadrat-Verteilungs-/Anpassungstest*
+
+> prüft, ob vorliegende Daten auf eine bestimmte Weise verteilt sind
+
+
+```{r, echo=FALSE}
+barplot(t(matrix(c(e$wt.obs, 
+                   e$wt.exp), ncol = 2)), 
+        beside = TRUE,
+        names.arg=e$size)
+```
+
+##  Hypothesentests: *Chi-Quadrat-Verteilungs-/Anpassungstest*
+
+> prüft, ob vorliegende Daten auf eine bestimmte Weise verteilt sind
+
+
+```{r}
+chisq.test(e$wt.obs, 
+           p = e$wt.exp, 
+           rescale.p=TRUE)
+```
+

@@ -1,7 +1,7 @@
 --- 
 title: "Daten verarbeiten und vorbereiten" 
 author: "Dirk Seidensticker/Clemens Schmid" 
-date: "6. Februar 2016" 
+date: "7. Juli 2017"
 fontsize: 9pt 
 output: 
   beamer_presentation: 
@@ -262,90 +262,82 @@ summarise(R.g, Mittwelwert = mean(V1), Summe = sum(V2))
 
 # Pivotieren (*apply & dcast)
 
-## Pivotieren
-
-```{r} 
-atlant <- read.csv(
-  "../data/AtlantData1.csv", 
-  sep = "\t", 
-  header = TRUE
-  )
-```
-
-```{r, echo=FALSE} 
-# atlant <- read.csv("C:/Users/DirkSeidenticker/Dropbox/dev/R-Tutorial_CAA2016/data/AtlantData1.csv", sep = "\t", header = TRUE)
-```
-
 ## Kreuztabelle mit Auszählen
 
-```{r} 
-table(atlant$site, atlant$size)
-```
+<!--[](../img/2-3_pivot.png)-->
 
+```{r}
+df <- read.csv("../data/2-3_data.csv", encoding = 'UTF-8')
+
+table(df$Stadt, df$Mannschaft)
+```
 
 ## Kreuztabelle mit Auszählen
 
 *dito mit tapply*
 
 ```{r} 
-a <- tapply(atlant$qty, list(atlant$site, atlant$size), length)
+a <- tapply(df$Name, 
+            list(df$Stadt,
+                 df$Mannschaft), 
+            length)
 a[is.na(a)] <- 0
 a
 ```
 
-
 ## Berechnungen in Abhängigkeit zu einer Variable
 
 ```{r} 
-tapply(atlant$wt, list(atlant$site), sum)
+tapply(df$Alter, list(df$Mannschaft), mean)
 ```
 
 
 ## Berechnungen in Abhängigkeit zu einer Variable
 
 ```{r} 
-data.frame(tapply(atlant$wt, list(atlant$site), sum))
+b <- data.frame(tapply(df$Alter, list(df$Mannschaft), mean))
+colnames(b) <- c("Mittleres Alter")
+b
 ```
-
 
 ## Berechnungen in Abhängigkeit zu einer Variable
 
 ```{r} 
-data.frame(tapply(atlant$wt, list(atlant$site), 
-                  function(x){sum(x)/1000}))
+b <- data.frame(tapply(df$Alter, list(df$Mannschaft),
+                       function(x){sum(x)/length(df$Name)}))
+colnames(b) <- c("berechneter Wert")
+b
 ```
-
 
 ## Berechnungen in Abhängigkeit zu zwei Variablen ####
 
 ```{r} 
-b <- data.frame(tapply(atlant$wt, 
-                list(atlant$site, atlant$size), sum), 
+b <- data.frame(tapply(df$Alter, 
+                list(df$Stadt, df$Mannschaft), mean), 
                 check.names = FALSE)
 b[is.na(b)] <- 0
 b
 ```
-
 
 ## Auszählen in Abhängigkeit zu drei Variablen
 
 ```{r} 
 library(reshape2)
 
-pivot <- dcast(atlant, site + feature ~ size) 
+c <- dcast(df, Mannschaft + Stadt ~ Geschlecht) 
 
-head(pivot)
+head(c)
 ```
 
 
 ## Berechnungen in Abhängigkeit zu drei Variablen
 
 ```{r} 
-pivot2 <- dcast(atlant, site + feature ~ size, 
-      value.var = "wt", 
-      fun.aggregate = sum)
+c <- dcast(df, Mannschaft + Stadt ~ Geschlecht, 
+      value.var = "Alter", 
+      fun.aggregate = mean)
 
-head(pivot2)
+head(c)
 ```
 
 # Datenanordnung - wide to long und long to wide (melt)
@@ -353,7 +345,7 @@ head(pivot2)
 ## Melt
 > Eingabeformat für ggplot2()!!!
 
-Wir wollen diese vorhin erstelle Tabelle plotten:
+Wir wollen diese vorhin erstellte Tabelle plotten:
 
 ```{r} 
 a
@@ -364,29 +356,28 @@ a
 
 ```{r} 
 library(reshape2)
-atlant_sites.size <- melt(a)
+a.long <- melt(a)
 
-head(atlant_sites.size)
+a.long
 ```
 
 
 ## Melt
 
 ```{r} 
-colnames(atlant_sites.size) <- c('site', 'size', 'qty')
+colnames(a.long) <- c('Stadt', 'Mannschaft', 'Anzahl')
 
-head(atlant_sites.size)
+head(a.long)
 ```
 
 
 # Filtern (subset & filter)
 
-## Filter und Subseting nach site 'F'
+## Filter und Subseting nach Mannschaft 'A'
 
 ```{r} 
-atlant_sub <- subset(atlant, site == 'F')
-head(atlant_sub)
-
+df.sub <- subset(df, Mannschaft == 'A')
+head(df.sub)
 ```
 
 
@@ -397,6 +388,6 @@ library(dplyr)
 ```
 
 ```{r} 
-atlant_filter <- filter(atlant, site == 'F' & wall > 5)
-head(atlant_filter)
+df.filt <- filter(df, Mannschaft == 'A' & Alter < 60)
+head(df.filt)
 ```

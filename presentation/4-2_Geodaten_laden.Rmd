@@ -1,0 +1,451 @@
+--- 
+title: "Geodaten" 
+author: "Dirk Seidensticker/Clemens Schmid" 
+date: "7. Juli 2017"
+fontsize: 8pt 
+output: 
+  beamer_presentation: 
+    theme: "metropolis" 
+    pandoc_args: [ 
+      "--highlight-style=tango" 
+    ] 
+fig_caption: yes 
+---
+
+# Grundlagen
+
+Wichtige Pakete für die Arbeit mit Geodaten in R:
+
+- **`sp`** - Hauptklassen für die Arbeit mit Geodaten
+    - `spTransform()` - Änderung Projektion
+- **`rgdal`** - R-Schnittstelle zu `gdal` (*Geospatial Data Abstraction Library*)
+    - `readOGR()` - Einlesen von bspw. GeoJSON
+- **`rgeos`** - R-Schnitstelle zu `geos` (*Geometry Engine Open Source*)
+    - `gBuffer()` - zur Berechung von Buffern um Punkte
+    - `gUnion()` - Führt Polygone zusammen
+- **`raster`** - Klassen für die Arbeit mit Rasterdaten
+    - `raster()` - Einlesen von Rasterdaten
+    - `projectRaster()` - Änderung Projektion
+    - `extract()` - Extrahiert Werte von Rasterobjekten
+    - `disaggregate()` - Erstellung höher aufgelöster Raster-Daten
+- `maptools` - Weitere Klassen für die Arbeit mit Geodaten
+
+Siehe auch: *[CRAN Task View: Analysis of Spatial Data](https://cran.r-project.org/web/views/Spatial.html)*
+
+<!--
+http://www2.stat.duke.edu/~cr173/Sta523_Fa14/slides/2014-09-29-spatial_data.html#1
+
+http://www2.stat.duke.edu/~cr173/Sta523_Fa14/shapefiles.html
+
+http://www2.stat.duke.edu/~cr173/Sta523_Fa15/spatial_data.html
+-->
+
+
+
+
+
+# AtlantGIS
+
+```{r, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(classInt)
+library(imager)
+library(RCurl)
+library(raster)
+library(rgdal)
+library(rgeos)
+library(sp)
+```
+
+```{r, echo=FALSE, warning=FALSE, comment=FALSE}
+dem <- raster("../../AtlantGIS-master/raster/dem/atlantgis_dgm.tif")
+dem <- projectRaster(dem, crs = "+init=epsg:4326" ) 
+
+url <- "https://raw.githubusercontent.com/kacebe/AtlantGIS/master/vector/geojson/coastline.geojson"
+data <- getURL(url)
+coastline <- readOGR(data, "OGRGeoJSON", verbose = FALSE)
+
+url <- "https://raw.githubusercontent.com/kacebe/AtlantGIS/master/vector/geojson/landtype.geojson"
+data <- getURL(url)
+landtype <- readOGR(data, "OGRGeoJSON", verbose = FALSE)
+
+url <- "https://raw.githubusercontent.com/kacebe/AtlantGIS/master/vector/geojson/sites.geojson"
+data <- getURL(url)
+sites <- readOGR(data, "OGRGeoJSON", verbose = FALSE)
+
+url <- "https://raw.githubusercontent.com/kacebe/AtlantGIS/master/vector/geojson/streams.geojson"
+data <- getURL(url)
+streams <- readOGR(data, "OGRGeoJSON", verbose = FALSE)
+```
+
+## Daten
+
+* `raster/dem/atlantgis_dgm.tif` - Digitales Geländemodell
+* `vector/geojson/sites.geojson` - Fundstellen
+* `vector/geojson/coastline.geojson` - Küstenlinie
+* `vector/geojson/streams.geojson` - Flüsse
+* `vector/geojson/landtype.geojson` - Vegetationsformen
+
+
+# AtlantGIS
+
+```{r}
+plot(dem)
+plot(coastline, add = TRUE)
+plot(streams, col = "#3b7fb2", add = TRUE)
+plot(sites, pch = 16, add = TRUE)
+```
+
+# Koordinatensystem und Projektion
+
+```{r}
+streams
+```
+
+
+Die meisten Funktionen benötigen ein projeziertes Koordinatensystem ==> UTM
+
+```{r}
+epsg <- 32628
+crs <- paste("+init=epsg:",epsg,"", sep="")
+```
+
+
+
+
+# Projektion
+
+```{r, error=FALSE}
+dem <- projectRaster(dem, crs = crs ) 
+
+coastline <-spTransform(coastline, CRS(crs)) 
+
+landtype <- spTransform(landtype, CRS(crs)) 
+
+sites <- spTransform(sites, CRS(crs)) 
+
+streams <- spTransform(streams, CRS(crs)) 
+
+streams
+```
+
+
+
+# Projektion
+
+```{r}
+plot(dem)
+plot(coastline, add = TRUE)
+plot(streams, col = "#3b7fb2", add = TRUE)
+plot(sites, pch = 16, add = TRUE)
+```
+
+# spplot()
+
+<!--
+http://rspatial.r-forge.r-project.org/gallery/
+-->
+
+```{r}
+spplot(dem)
+```
+
+# Lage der Fundstellen
+
+```{r}
+dem.sites <- extract(dem, sites)
+dem.max <- max(getValues(dem), na.rm = TRUE) # höchster Punkt
+hist(dem.sites, xlim = c(0, dem.max))
+```
+
+# Lage der Fundstellen
+
+Entfernung zu den Flüssen
+
+```{r}
+streams <- gUnion(streams, streams) # mögliche multi-polygone zusammenführen
+
+ext <- extent(streams) # bounding box & resolution
+
+ncol <- length((ext@xmin/1000):(ext@xmax/1000))
+nrow <- length((ext@ymin/1000):(ext@ymax/1000))
+
+streams.dist <- raster(extent(streams), nrow = nrow, ncol = ncol, crs = crs)
+
+dd = gDistance(streams, as(streams.dist,"SpatialPoints"), byid=TRUE)
+
+streams.dist[] = apply(dd,1,min)
+
+streams.dist <- mask(streams.dist, coastline)
+```
+
+> `ext@xmin/1000` so gering, damit Berechnung schneller geht (hier ein 1km Raster)
+
+
+# Lage der Fundstellen
+
+Entfernung zu den Flüssen
+```{r}
+plot(streams.dist)
+plot(coastline, add = TRUE)
+plot(streams, col = "#3b7fb2", add = TRUE)
+plot(sites, pch = 16, add = TRUE)
+```
+
+# Lage der Fundstellen
+
+```{r, echo=FALSE}
+# n-boundarys
+n <- 10
+v <- na.omit(getValues(streams.dist))
+intv <- classIntervals(v, n)
+
+# reclassfication-matrix in schleife erzeugen
+rows <- seq(1, n)
+cols <- 3
+rclmat <- matrix(, nrow = length(rows), ncol = cols) # leere Matrix aufbauen
+for(i in 1:n){
+  rclmat[i,1] <- floor(intv$brks[i])
+  rclmat[i,2] <- intv$brks[i+1]
+  rclmat[i,3] <- i
+}
+
+streams.dist.reclass <- reclassify(streams.dist, rclmat)
+
+#reclassify values below 1 to 1
+streams.dist.reclass[streams.dist.reclass<1]=1
+
+# Verteilung Sites:
+# -----------------
+streams.dist.sites <- extract(streams.dist.reclass, sites) # extrahiert Werte
+streams.dist.obs <- table(streams.dist.sites) # Auszähltabelle
+
+# Verteilung in study area
+# ------------------------
+
+streams.dist.exp <- table(getValues(streams.dist.reclass))
+
+# Stats
+# -----
+
+streams.dist.exp <- data.frame(streams.dist.exp)
+streams.dist.obs <- data.frame(streams.dist.obs)
+colnames(streams.dist.obs) <- c("Var1", "Freq")
+
+streams.merge = merge(x = streams.dist.exp, 
+                    y = streams.dist.obs, 
+                    by = 'Var1',
+                    all = TRUE)
+
+# Expected: pct of classes
+streams.merge$ExpPct <- streams.merge$Freq.x / sum(streams.merge$Freq.x)
+
+sites.exp <- sum(streams.merge$Freq.y, na.rm = TRUE) # count of sites
+
+# Expected Count of sites (PAL_MESO_site = 49) per class 
+streams.merge$ExpSites <- sites.exp * streams.merge$ExpPct
+
+streams.merge <- replace(streams.merge, is.na(streams.merge), 0) # leerstellen zu 0
+
+barplot(t(matrix(c(streams.merge$Freq.y, 
+                   streams.merge$ExpSites), ncol = 2)), 
+        beside = TRUE, 
+        names.arg=streams.merge$Var1)
+```
+
+```{r, echo=FALSE, warning=FALSE}
+# Chi2-Test for Goodness of fit!
+chisq <- chisq.test(streams.merge$Freq.y,
+           p = streams.merge$ExpSites,
+           rescale.p=TRUE)
+print(paste("Chi-Quadrat-Verteilungs-/Anpassungstest: p =", chisq$p.value))
+```
+
+# Modelle
+
+<!--
+binär kodierte (0/1) Rasterkarten erstellen
+-->
+
+```{r, echo=FALSE}
+x <- unique(getValues(streams.dist.reclass)) # vertetene Klassen
+x <- x[!is.na(x)] # NaN's raus
+
+for(i in 1:length(x)){
+  l <- streams.dist.reclass == x[i]
+  assign( paste("streams.dist.reclass.value", x[i], sep = "_"), l)
+}
+
+# Klassen 3+4 addieren
+
+stack <- stack(streams.dist.reclass.value_3, streams.dist.reclass.value_4)
+stack <- calc(stack, fun=sum)
+
+plot(stack)
+plot(coastline, add = TRUE)
+plot(streams, col = "#3b7fb2", add = TRUE)
+plot(sites, pch = 16, add = TRUE)
+```
+
+# Geophysik
+
+```{r, error=FALSE}
+geophys_excavation <- raster("../../AtlantGIS-master/raster/geophys/geophys_excavation.tif")
+geophys_excavation <- projectRaster(geophys_excavation, crs = crs ) 
+
+plot(geophys_excavation, col = gray.colors(256, start = 0, end = 1))
+```
+
+# Geophysik
+
+```{r}
+extent(geophys_excavation)
+```
+
+```{r, echo=FALSE}
+id = c("crt") 
+lat = c((xmax(geophys_excavation) + xmin(geophys_excavation))/2)
+lng = c((ymax(geophys_excavation) + ymin(geophys_excavation))/2)
+
+coords <- cbind(lat, lng)
+
+df = data.frame(id, lat, lng) 
+df
+geophys.ctr <- SpatialPointsDataFrame(coords, df)
+```
+
+```{r, fig.width=5, fig.height=3, echo=FALSE}
+# par.mfrow ... side by side
+
+plot(dem, legend=FALSE, axes=FALSE, box=FALSE)
+plot(coastline, lwd=.5, add = TRUE)
+plot(streams, col = "#3b7fb2", lwd=.5, add = TRUE)
+plot(geophys.ctr, add=TRUE)
+```
+
+
+
+
+
+# plot(..., interpolate=TRUE)
+
+```{r}
+plot(geophys_excavation, interpolate=TRUE, 
+     col = gray.colors(256, start = 0, end = 1))
+```
+
+# disaggregate()
+
+```{r}
+y <- disaggregate(geophys_excavation, 5, method='bilinear')
+plot(y, col = gray.colors(256, start = 0, end = 1))
+```
+
+# focal()
+
+*Berechnet für jede Eingabezellenposition eine Statistik der Werte innerhalb einer angegebenen Nachbarschaft*
+
+```{r}
+y <- focal(geophys_excavation, w=matrix(1, 5, 5), mean)
+plot(y, col = gray.colors(256, start = 0, end = 1))
+```
+
+# Anomalien finden
+
+```{r, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(spatialEco)
+#im <- geophys_excavation
+
+# Invertierte Variante erstellen
+# jeweils alle Werte unterhalb des Mittelwertes raus
+# beide Teile wieder zusammen addieren
+
+#r <- geophys_excavation
+
+geophysPeaks<- function(r) {
+  r1 <- r
+  r2 <- raster.invert(r1)
+  
+  r <- list(r1, r2)
+  
+  for(i in 1:length(r)){
+    r.vals <- getValues(r[[i]])
+    r.mean <- mean(r.vals, na.rm = TRUE)
+    r[[i]][r[[i]] < r.mean] <- NA
+  }
+  
+  stack <- stack(r[[1]], r[[2]])
+  r.stack <- calc(stack, fun=sum, na.rm = TRUE)
+  r.stack[r.stack == 0] <- NA
+  
+  return(r.stack)
+}
+
+#plot(r[[1]])
+
+#plot(r[[2]])
+
+#plot(r.stack)
+
+im <- geophysPeaks(geophys_excavation)
+#im <- r.stack
+
+#plot(im)
+```
+
+[Blob detection/extraction of local maxima, denoising, scale-space](https://cran.r-project.org/web/packages/imager/vignettes/gettingstarted.html#blob-detectionextraction-of-local-maxima-denoising-scale-space)
+
+<!--
+(in Python: https://stackoverflow.com/questions/3684484/peak-detection-in-a-2d-array)
+-->
+
+```{r, echo=FALSE}
+im.inv <- raster.invert(im) # Invertieren des Rasters
+#plot(im.inv, col = gray.colors(256, start = 0, end = 1))
+
+geophys.im.inv <- as.cimg(im.inv)
+#plot(geophys.im.inv)
+
+Hdet <- with(imhessian(geophys.im.inv),(xx*yy - xy^2))
+
+Hdet[is.na(Hdet)] <- 0
+
+#plot(Hdet)
+
+lab <- threshold(Hdet,"99%") %>% label
+#plot(lab,main="Labelled regions")
+
+df <- as.data.frame(lab) %>% subset(value>0)
+
+centers <- ddply(df,.(value),summarise,mx=mean(x),my=mean(y))
+
+plot(as.cimg(geophys_excavation))
+with(centers,points(mx,my,col="red"))
+```
+
+<!--
+* durch die Umwandlung in `im` geht die Geoinformation verloren!
+-->
+
+# Weitere Daten
+
+```{r, echo=FALSE, warning=FALSE, comment=FALSE}
+features <- readOGR(dsn = "../../AtlantGIS-master/gettingstarted/sqlite/atlantgis_excavation.sqlite", layer = "uebung1_features", verbose = FALSE)
+
+walls <- readOGR(dsn = "../../AtlantGIS-master/gettingstarted/sqlite/atlantgis_excavation.sqlite", layer = "uebung1_walls", verbose = FALSE)
+```
+
+```{r}
+plot(geophys_excavation, col = gray.colors(256, start = 0, end = 1))
+plot(features, add = TRUE)
+plot(walls, col=rgb(0,100,0,50,maxColorValue=255), add = TRUE)
+```
+
+
+<!--
+Siehe:
+
+* http://neondataskills.org/R/Image-Raster-Data-In-R/
+* http://neondataskills.org/R/crop-extract-raster-data-R/
+
+
+-->

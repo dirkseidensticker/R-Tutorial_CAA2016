@@ -1,7 +1,7 @@
 ---
 title: "Daten laden und speichern"
 author: "Dirk Seidensticker/Clemens Schmid"
-date: "6. Februar 2016"
+date: "7. Juli 2017"
 fontsize: 9pt
 output:
   beamer_presentation:
@@ -13,34 +13,17 @@ fig_caption: yes
 
 ## Daten aus dem Dateisystem laden
 
-```{r, eval=FALSE} 
-# nicht lauffähig
+```{r} 
 df <- read.csv("../data/AtlantPottery.csv")
 ```
 
-Fehlermeldung:
+bei csv evtl. zu beachten:
 
-```r
-Error in read.table(
-  file = file, 
-  header = header, 
-  sep = sep, 
-  quote = quote,  : 
-  doppelte 'row.names' sind nicht zulässig
-```
-
-## Daten aus dem Dateisystem laden
-
-```{r} 
-df <- read.csv("../data/AtlantPottery.csv", sep = '\t')
-```
-
-```{r, echo=FALSE} 
-# df <- read.csv(
-# "C:/Users/DirkSeidenticker/Dropbox/dev/R-Tutorial_CAA2016/data/AtlantPottery.csv", 
-# sep = '\t'
-#)
-```
+* **sep = ** identifiziert das Trennzeichen
+    * **`";"`** Semikolon
+    * **`"\t"`** Tabulator
+* **dec = ","** identifiziert das Komma als Dezimalzeichen
+* **row.names = 1** definiert erste Spalte als Zeilennamen (index)
 
 ## Daten aus dem Dateisystem laden
 
@@ -49,15 +32,19 @@ head(df)
 ```
 
 
-
 # Andere Datenquellen
 
 ## Datenbanken und XML
 
-* **SQLite**: library(RSQLite)
-* **PostGreSQL**: library(RPostgreSQL) 
-* MySQL, Oracle, ODBC (library(RODBC)), MongoDB, ...
-* XML, JSON
+* Datenbanken
+    * **SQLite**: library(RSQLite)
+    * **PostGreSQL**: library(RPostgreSQL) 
+    * MySQL, Oracle, ODBC (library(RODBC)), MongoDB, ...
+* hierarchisch strukturierter Daten
+    * **XML**
+    * JSON
+
+## SQLite
 
 ```{r, eval=FALSE} 
 # nicht lauffähig
@@ -68,3 +55,56 @@ con <- dbConnect(drv, "../data/DB.sqlite")
 df = dbGetQuery(con, "SELECT * FROM ...")
 head(df)
 ```
+
+## PostgreSQL
+
+```{r, eval=FALSE} 
+# nicht lauffähig
+library(RPostgreSQL)
+drv <- dbDriver("PostgreSQL")
+con <- dbConnect(drv, dbname = "DATENBANKNAME",
+                 host = "escience-center.uni-tuebingen.de", 
+                 port = 12345,
+                 user = "user", password = "pw")
+
+df = dbGetQuery(con, "SELECT * FROM ...")
+head(df)
+```
+
+
+## XML
+
+```{r}
+library(XML)
+library(RCurl)
+
+url <- "https://www.w3schools.com/xml/simple.xml"
+data <- getURL(url)
+doc <- xmlParse(data)
+class(doc)
+```
+
+## XML
+
+```{r}
+doc <- xmlRoot(doc) #gives content of root
+doc[1]
+```
+
+## XML
+
+```{r}
+df <- xmlToDataFrame(nodes=getNodeSet(doc,"//food"))
+df[,c(1,2,4)]
+```
+
+
+
+
+
+
+
+
+
+
+

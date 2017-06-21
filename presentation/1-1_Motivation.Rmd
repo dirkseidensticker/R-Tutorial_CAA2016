@@ -1,7 +1,7 @@
 ---
-title: "Analyse und Visualisierung archäologischer Daten mit R"
+title: "Einführung in R für Geisteswissenschaftler"
 author: "Dirk Seidensticker/Clemens Schmid"
-date: "6. Februar 2016"
+date: "7. Juli 2017"
 fontsize: 9pt
 output:
   beamer_presentation:
@@ -13,15 +13,14 @@ fig_caption: yes
 
 # Einleitung
 
-## About us
+## About me
 
-|**Dirk Seidensticker**|**Clemens Schmid**|
-|------------------------------------|------------------------------------|
-|seit 2015: Wiss. Mitarbeiter der Forschungsstelle Afrika (Universität zu Köln)|seit 2015: Masterstudium CAU Kiel|
-|seit 2012: Promotion an der Universität zu Köln||
-|**Python, R, SQL**|**R, SQL, Java, C++**|
+* **Dirk Seidensticker**|
+    * seit 2016: Wiss. Mitarbeiter am eScience-Center (Eberhard Karls Universität Tübingen)
+    * seit 2012: Promotion an der Universität zu Köln
+    * **Python, R, SQL**
 
-## Daten in der Archäologie
+## Daten in den Geisteswissenschaften (Archäologie)
 
 ![Fotos: K. Jungnickel 2015](../img/motivation01.png)
 

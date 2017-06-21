@@ -1,7 +1,7 @@
 ---
 title: "R als Programmiersprache"
 author: "Dirk Seidensticker/Clemens Schmid"
-date: "6. Februar 2016"
+date: "7. Juli 2017"
 output:
   beamer_presentation:
     pandoc_args: --highlight-style=tango
@@ -67,7 +67,7 @@ fig_caption: yes
 
 * *2015:* Gründung des **R-Consortium** (Microsoft, RStudio, HP, Google, Oracle etc.)
 
-* Aktuelle Version: **R 3.2.3** "Wooden Christmas-Tree"  
+* Aktuelle Version: **R 3.3.3** "Another Canoe"  
 
 # Hilfefunktionen
 
