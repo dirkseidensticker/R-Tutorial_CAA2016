@@ -1,6 +1,6 @@
 --- 
-title: "Geodaten" 
-author: "Dirk Seidensticker/Clemens Schmid" 
+title: "Analyse von Geodaten" 
+author: "Dirk Seidensticker" 
 date: "7. Juli 2017"
 fontsize: 8pt 
 output: 
@@ -183,7 +183,6 @@ streams.dist <- mask(streams.dist, coastline)
 
 # Lage der Fundstellen
 
-Entfernung zu den Flüssen
 ```{r}
 plot(streams.dist)
 plot(coastline, add = TRUE)

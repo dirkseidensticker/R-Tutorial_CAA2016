@@ -82,4 +82,6 @@
 - 4 Geodaten-Verarbeitung
 
     - 4.1 Arten von Geodaten und ihre Einbindung in R
-    - 4.2 Punktfeldstatistik
+    - 4.2 Kartierungen und Projektionen
+    - 4.3 Geostatistik
+    - 4.4 Arbeit mit Rasterdaten
