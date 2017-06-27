@@ -24,6 +24,7 @@ bei csv evtl. zu beachten:
     * **`"\t"`** Tabulator
 * **dec = ","** identifiziert das Komma als Dezimalzeichen
 * **row.names = 1** definiert erste Spalte als Zeilennamen (index)
+* **encoding = 'latin1'** Zeichenkodierung für mit Windows-Programmen geschriebene Dateien (siehe auch 'utf8')
 
 ## Daten aus dem Dateisystem laden
 
@@ -38,7 +39,7 @@ head(df)
 
 * Datenbanken
     * **SQLite**: library(RSQLite)
-    * **PostGreSQL**: library(RPostgreSQL) 
+    * **PostgreSQL**: library(RPostgreSQL) 
     * MySQL, Oracle, ODBC (library(RODBC)), MongoDB, ...
 * hierarchisch strukturierter Daten
     * **XML**
@@ -97,6 +98,7 @@ doc[1]
 df <- xmlToDataFrame(nodes=getNodeSet(doc,"//food"))
 df[,c(1,2,4)]
 ```
+
 
 
 

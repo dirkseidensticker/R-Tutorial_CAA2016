@@ -16,9 +16,9 @@ fig_caption: yes
 ## About me
 
 * **Dirk Seidensticker**|
-    * seit 2016: Wiss. Mitarbeiter am eScience-Center (Eberhard Karls Universität Tübingen)
-    * seit 2012: Promotion an der Universität zu Köln
-    * **Python, R, SQL**
+    * seit 2016: Wiss. Mitarbeiter am eScience-Center
+    * Promotion an der Universität Tübingen
+    * **R, Python, SQL**
 
 ## Daten in den Geisteswissenschaften (Archäologie)
 

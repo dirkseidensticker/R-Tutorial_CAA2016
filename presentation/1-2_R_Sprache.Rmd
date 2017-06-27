@@ -14,8 +14,6 @@ fig_caption: yes
 
 # Grundlagen
 
-## Grundlagen
-
 ![R Logo](../img/Rlogo_wide.png)
 
 * R ist eine **vollwertige Programmiersprache** zur statistischen **Datenverarbeitung und -visualisierung**
@@ -68,6 +66,37 @@ fig_caption: yes
 * *2015:* Gründung des **R-Consortium** (Microsoft, RStudio, HP, Google, Oracle etc.)
 
 * Aktuelle Version: **R 3.3.3** "Another Canoe"  
+
+# IDE
+
+![R GUI](../img/Screenshot 2017-06-27 11.51.37.png)
+
+# R Commander
+
+http://socserv.mcmaster.ca/jfox/Misc/Rcmdr/
+
+![The R Commander: A Basic-Statistics GUI for R](http://socserv.mcmaster.ca/jfox/Misc/Rcmdr/Rcmdr-screenshot.jpg)
+
+# Microsoft R
+
+https://mran.microsoft.com/
+
+![R Tools for Visual Studio](https://msdnshared.blob.core.windows.net/media/2016/03/RTVS-1.jpg)
+
+# RStudio
+
+![RStudio](../img/Screenshot 2017-06-27 12.09.34.png)
+
+
+
+# RStudio
+
+![Unterstütztes Importieren von Datensätzen](https://support.rstudio.com/hc/en-us/article_attachments/206278098/Screen_Shot_2016-04-08_at_3.12.26_PM.png)
+
+# RStudio
+
+![Autovervollständigung](https://tensorflow.rstudio.com/images/completion-functions.png)
+
 
 # Hilfefunktionen
 

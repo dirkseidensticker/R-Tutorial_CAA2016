@@ -391,3 +391,23 @@ library(dplyr)
 df.filt <- filter(df, Mannschaft == 'A' & Alter < 60)
 head(df.filt)
 ```
+
+# SQL-artige Bearbeitungen und Abfragen
+
+## sqldf()
+
+```{r, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(sqldf)
+```
+
+```{r, warning=FALSE, message=FALSE}
+sqldf('SELECT Stadt,
+              Mannschaft
+      FROM df 
+      WHERE Geschlecht IS "m" 
+      GROUP BY Stadt,
+               Mannschaft')
+```
+
+
+

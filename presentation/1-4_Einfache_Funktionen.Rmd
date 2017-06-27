@@ -9,7 +9,53 @@ output:
 fig_caption: yes
 ---
 
-# Einfache Funktionen
+# Bedingte Anweisung und Verzweigung
+
+## if...else
+
+Eine Kontrollstruktur bei der die Ausführung eines Codeabschnitts durch die Erfüllung oder nicht Erfüllung einer Bedingung gesteuert wird. 
+
+```{r}
+x <- -5
+if(x > 0)
+{
+   print("Positive Zahl")
+} else
+{
+   print("Negative Zahl")
+}
+```
+
+# Schleifen
+
+## for()-Schleife (*Zählschleife*)
+
+Eine Kontrollstruktur in der eine Gruppe von Anweisungen (Block) mit einer bestimmten Anzahl von Wiederholungen bzw. Argumenten ausführen werden.
+
+```{r}
+a <- seq(1, 10, by=2)
+
+for (i in 1:length(a)) {
+  print(a[i])
+}
+```
+
+
+## while()-Schleife (*vorprüfende* oder *kopfgesteuerte* Schleife)
+
+Eine Kontrollstruktur in der eine Bedingung geprüft wird und im vorhinein entschieden wird, ob der Schleifenrumpf (Schleifeninhalt) ausgeführt wird. 
+
+```{r}
+b <- 1
+
+while (b < 10) {
+  b <- b + 2
+  print(b)
+}
+```
+
+
+# Funktionen
 
 ## Einfache Funktionen
 
@@ -22,10 +68,10 @@ Kurz: ein Programm innerhalb eines Programms.
 ## Funktionen in R
 
 ```{r, eval=FALSE} 
-# nicht lauffähig
-function(Parameter1, Parameter2, ...) {
-        Anweisungen;
-        }
+function.name <- function(Parameter1, Parameter2, ...)
+{
+  Anweisungen;
+}
 ```
 
 * Funktionen in R beschreiben in ihrer Signatur keine Rückgabewerte! (Unterschied zu anderen Programmiersprachen)
@@ -34,12 +80,29 @@ function(Parameter1, Parameter2, ...) {
 ## Funktionen in R
 
 ```{r} 
-myfunc <- function(x,y){ # Funktion mit den Parametern x und y
-          z <- x+y;      # Summe von x und y in z speichern
-          return(z)      # z zurückgeben
-          }
+myfunc <- function(x,y) # Funktion mit den Parametern x und y
+{ 
+  z <- x+y;      # Summe von x und y in z speichern
+  return(z)      # z zurückgeben
+}
 
-myfunc(4,6)
+x <- myfunc(4,6)
+x
 ```
 
 * Besonderheit von R: für die Parameter können Standardwerte vorgegeben werden!
+
+## Funktionen nutzen
+
+Built-in Functions: http://www.statmethods.net/management/functions.html
+
+Potenz:
+```{r}
+exp(5)
+```
+
+Quadratwurzel:
+```{r}
+sqrt(5)
+```
+
