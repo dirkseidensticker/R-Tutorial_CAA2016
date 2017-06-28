@@ -1,0 +1,65 @@
+--- 
+title: "ggplot-Aufgabe" 
+author: "Dirk Seidensticker" 
+date: "7. Juli 2017"
+fontsize: 8pt 
+output: 
+  beamer_presentation: 
+    theme: "metropolis" 
+    pandoc_args: [ 
+      "--highlight-style=tango" 
+    ] 
+fig_caption: yes 
+---
+
+# Aufgabenstellung
+
+## Plot
+
+Die Verteilung der Wandungsstärken und Proportionen der gefunden Gefäße mit Bezug auf ihre Funktion zeigt ...
+
+&nbsp;
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(cowplot)
+library(ggplot2)
+library(gridExtra)
+
+# Daten laden und mergen
+finds <- read.csv("https://raw.githubusercontent.com/kacebe/AtlantGIS/master/tables/Finds.csv", sep = ',', encoding = 'UTF-8')
+vessels <- read.csv("https://raw.githubusercontent.com/kacebe/AtlantGIS/master/tables/Finds_VesselTypes.csv", sep = ',', encoding = 'UTF-8')
+
+finds <- merge(x = finds, y = vessels, by = "vesselShape")
+
+
+#bins <- max(finds$wall, na.rm = TRUE) - min(finds$wall, na.rm = TRUE)
+#bins
+
+p1 <- ggplot(finds, aes(wall, fill = vesselFunction)) + 
+  geom_histogram(binwidth = 1) + 
+  theme_classic() + 
+  theme(legend.position="top", 
+        legend.title=element_blank())
+
+p2 <- ggplot(finds, aes(x = maxD, y = muendungsH, color = vesselFunction)) + 
+  geom_point(size = 4) + 
+  coord_equal() + 
+  theme_classic() + 
+  theme(legend.position="none")
+
+legend <- get_legend(p1)
+
+p1 <- p1 + theme(legend.position="none")
+
+grid.arrange(p1, p2, legend, ncol=2, nrow = 2, 
+             layout_matrix = rbind(c(1,2), c(3,3)),
+             widths = c(2.7, 2.7), heights = c(2.5, 0.9))
+```
+
+## Hilfe
+
+* merge()
+* mehrere ggplots in eine figure grid.arrange()
+* theme_...()
+* siehe http://www.sthda.com/english/wiki/ggplot2-easy-way-to-mix-multiple-graphs-on-the- same-page-r-software-and-data-visualization
+

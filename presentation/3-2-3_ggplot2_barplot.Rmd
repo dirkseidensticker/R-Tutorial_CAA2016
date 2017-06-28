@@ -1,7 +1,7 @@
 --- 
 title: "Anwendung 3: Barplot" 
 author: "Dirk Seidensticker/Clemens Schmid" 
-date: "6. Februar 2016" 
+date: "7. Juli 2017"
 fontsize: 8pt 
 output: 
   beamer_presentation: 
@@ -20,7 +20,7 @@ library(ggplot2)
 ```
 
 ```{r} 
-df <- read.csv("../data/AtlantPottery.csv", sep = ',')
+df <- read.csv("https://raw.githubusercontent.com/kacebe/AtlantGIS/master/tables/Finds.csv", sep = ',', encoding = 'UTF-8')
 ```
 
 ```{r, echo=FALSE} 

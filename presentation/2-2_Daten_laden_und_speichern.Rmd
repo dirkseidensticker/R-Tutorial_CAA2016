@@ -13,8 +13,12 @@ fig_caption: yes
 
 ## Daten aus dem Dateisystem laden
 
-```{r} 
+```{r, eval=FALSE} 
 df <- read.csv("../data/AtlantPottery.csv")
+```
+
+```{r, echo=FALSE} 
+df <- read.csv("https://raw.githubusercontent.com/kacebe/AtlantGIS/master/tables/Finds.csv", sep = ',', encoding = 'UTF-8')
 ```
 
 bei csv evtl. zu beachten:
