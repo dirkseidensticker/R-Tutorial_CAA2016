@@ -40,12 +40,52 @@ ggplot(df, aes(wt)) +
 
 # Anwendung 1: Histogramm
 
-Kategoriebreite anpassen
+Klassenbreite
 
 ```{r, fig.width=10, fig.height=6} 
 ggplot(df, aes(wt)) + 
   geom_histogram(binwidth = 100)
 ```
+
+# Anwendung 1: Histogramm
+
+## Exkurs: optimale Klassenbreite via Freedman–Diaconis-Regel
+
+siehe:
+
+* https://stats.stackexchange.com/questions/798/calculating-optimal-number-of-bins-in-a-histogram
+* https://en.wikipedia.org/wiki/Freedman%E2%80%93Diaconis_rule
+
+$$ Bin size = 2 \frac{IRQ(x)}{\sqrt[3]{n}}$$
+
+$IRQ(x)$ = Interquartilabstand
+
+# Anwendung 1: Histogramm
+
+## Exkurs: optimale Klassenbreite via Freedman–Diaconis-Regel
+
+```{r, fig.width=10, fig.height=5}
+layout(matrix(c(1,2),1,2,byrow=TRUE))
+hist(df$wt, main = "Standart")
+hist(df$wt, breaks="FD", main = "Freedman–Diaconis-Regel")
+```
+
+# Anwendung 1: Histogramm
+
+## Exkurs: optimale Klassenbreite via Freedman–Diaconis-Regel
+
+<!--
+nclass.FD(df$wt)
+nclass.Sturges(df$wt)
+-->
+
+```{r, fig.width=10, fig.height=5}
+bw <- diff(range(df$wt)) / (2 * IQR(df$wt) / length(df$wt)^(1/3))
+
+ggplot(df, aes(wt)) + 
+  geom_histogram(bins = bw)
+```
+
 
 
 # Anwendung 1: Histogramm

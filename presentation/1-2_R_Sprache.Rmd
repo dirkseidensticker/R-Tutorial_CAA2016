@@ -87,7 +87,9 @@ https://mran.microsoft.com/
 
 ![RStudio](../img/Screenshot 2017-06-27 12.09.34.png)
 
+# RStudio
 
+**TOUR**
 
 # RStudio
 
