@@ -221,7 +221,16 @@ worldmap +
     * **theme**_...() +  
     * **coord**_...()
 
+## ggsave
 
+Speichern der erstellten Plots als Vektor- oder Rastergrafiken.
+
+```{r, eval=FALSE}
+ggplot(data = R, aes(x = V1, y = V2, colour = V3)) +
+  geom_point()
+ggsave("output/filename.pdf", width = 8, height = 6)
+ggsave("output/filename.png", width = 8, height = 6)
+```
 
 # Quellen und Empfehlungen
 
