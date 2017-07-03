@@ -1,0 +1,41 @@
+--- 
+title: "Literaturempfehlungen" 
+author: "Dirk Seidensticker" 
+date: "7. Juli 2017"
+fontsize: 8pt 
+output: 
+  beamer_presentation: 
+    theme: "metropolis" 
+    pandoc_args: [ 
+      "--highlight-style=tango" 
+    ] 
+fig_caption: yes 
+---
+
+# Litearturempfehlungen
+
+## Datenanalyse
+
+* Arnold, Taylor; Tilton, Lauren (2015): Humanities data in R. Exploring networks, geospatial data, images, and text. Cham: Springer (Quantitative methods in the humanities and social sciences).
+* Borcard, Daniel; Gillet, François; Legendre, Pierre (2011): Numerical ecology with R. New York: Springer (Use R!).
+* Friendly, Michael; Meyer, David (2016): Discrete data analysis with R. Visualization and modeling techniques for categorical and count data. Unter Mitarbeit von Achim Zeileis. Boca Raton, London, New York: CRC Press (A Chapman & Hall book, 120).
+* Greenacre, Michael J. (2007): Correspondence analysis in practice. 2. Aufl. Boca Raton, Fla. [u.a.]: Champman & Hall/CRC; Chapman & Hall/CRC.
+
+![Datenanalyse](img/literatur_datenanalyse.pdf)
+
+## Geodaten
+
+* Baddeley, Adrian (2015): Spatial Point Patterns. Methodology and Applications with R. Boca Raton: CRC Press (Chapman & Hall / CRC Interdisciplinary Statistics).
+* Bivand, Roger S.; Pebesma, Edzer J.; Gómez-Rubio, Virgilio (2008): Applied spatial data analysis with R. New York/London: Springer.
+* Nakoinz, Oliver; Knitter, Daniel (2016): Modelling Human Behaviour in Landscapes. Basic Concepts and Modelling Elements. Cham, s.l.: Springer International Publishing (Quantitative Archaeology and Archaeological Modelling).
+
+![Geodaten](img/literatur_geodaten.pdf)
+
+## Weitere
+
+* Claude, Julien (2008): Morphometrics with R. New York: Springer (Use R!).
+* Frery, Alejandro C.; Perciano, Talita (2013): Introduction to image processing using R. Learning by examples. London, New York: Springer (SpringerBriefs in computer science).
+* Hellbrück, Reiner (2016): Angewandte Statistik mit R. Eine Einführung für Ökonomen und Sozialwissenschaftler. 3. Aufl. 2016. Wiesbaden, s.l.: Springer Fachmedien Wiesbaden.
+* Sarkar, Deepayan (2008): Lattice. Multivariate data visualization with R. New York, London: Springer Science+Business Media (Use R!).
+
+![Weitere](img/literatur_weitere.pdf)
