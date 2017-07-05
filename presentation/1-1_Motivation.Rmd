@@ -13,12 +13,20 @@ fig_caption: yes
 
 # Einleitung
 
-## About me
+## Über mich
 
 * **Dirk Seidensticker**|
     * seit 2016: Wiss. Mitarbeiter am eScience-Center
     * Promotion an der Universität Tübingen
     * **R, Python, SQL**
+
+## Über euch
+
+* Was ist euer Forschungsfeld / Fachbereich?
+* Was erwartet ihr von R?
+* Habt ihr bereits Erfahrungen mit R (oder einer anderer Programmiersprache)?
+* Was erwartet ihr von diesem Kurs?
+* Habt ihr bereits eigene konkrete Fragestellungen / Daten?
 
 ## Daten in den Geisteswissenschaften (Archäologie)
 
