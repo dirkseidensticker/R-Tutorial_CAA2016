@@ -16,7 +16,7 @@ fig_caption: yes
 
 ## Plot
 
-Die Verteilung der Wandungsstärken und Proportionen der gefunden Gefäße mit Bezug auf ihre Funktion zeigt ...
+Die Verteilung der Wandungsstärken und Proportionen der gefundenen Gefäße mit Bezug auf ihre Funktion zeigt ...
 
 &nbsp;
 
