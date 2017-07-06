@@ -16,10 +16,9 @@ fig_caption: yes
 ## Daten laden
 
 ```{r} 
+#Not running
 atlant <- read.csv(
-  "../data/AtlantData1.csv", 
-  sep = "\t", 
-  header = TRUE)
+  "https://raw.githubusercontent.com/kacebe/AtlantGIS/master/tables/Finds.csv", sep = ',', encoding = 'UTF-8')
 ```
 
 ```{r} 

@@ -30,7 +30,7 @@ if(x > 0)
 
 ## for()-Schleife (*Zählschleife*)
 
-Eine Kontrollstruktur in der eine Gruppe von Anweisungen (Block) mit einer bestimmten Anzahl von Wiederholungen bzw. Argumenten ausführen werden.
+Eine Kontrollstruktur in der eine Gruppe von Anweisungen (Block) mit einer bestimmten Anzahl von Wiederholungen bzw. Argumenten ausgeführt werden soll.
 
 ```{r}
 a <- seq(1, 10, by=2)
