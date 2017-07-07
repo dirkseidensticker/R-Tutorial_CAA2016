@@ -23,6 +23,7 @@ fig_caption: yes
 ## Über euch
 
 * Was ist euer Forschungsfeld / Fachbereich?
+* Wie analysiert ihr gegenwärtig eure wiss. Daten?
 * Was erwartet ihr von R?
 * Habt ihr bereits Erfahrungen mit R (oder einer anderer Programmiersprache)?
 * Was erwartet ihr von diesem Kurs?
@@ -31,6 +32,11 @@ fig_caption: yes
 ## Daten in den Geisteswissenschaften (Archäologie)
 
 ![Fotos: K. Jungnickel 2015](../img/motivation01.png)
+
+## *Lingua Franca*
+
+![](../img/Mizumoto2015.jpg)
+
 
 ## Reproduzierbarkeit
 
